@@ -11,7 +11,9 @@ services:
     branch: main
     # root directory containing package.json for the backend
     root: backend
-    buildCommand: npm install
+    # Build frontend first (produces frontend/dist), then install backend deps.
+    # Running from the backend root, cd ../frontend to build the React app.
+    buildCommand: bash -lc "cd ../frontend && npm ci && npm run build && cd ../backend && npm ci"
     startCommand: npm start
     envVars:
       # Do NOT commit secrets into the repository. Set these in the Render dashboard instead.
