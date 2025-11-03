@@ -37,6 +37,11 @@ app.get('/api/queue', async (req, res) => {
   res.json(items);
 });
 
+// Health check for deployment platforms
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' })
+})
+
 // Admin login - returns JWT if password matches
 app.post('/api/admin/login', async (req, res) => {
   const { password } = req.body || {}
