@@ -8,7 +8,7 @@
     "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "dependencies": {
     "react": "^18.2.0",
