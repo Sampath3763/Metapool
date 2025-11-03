@@ -14,8 +14,7 @@ services:
     buildCommand: npm install
     startCommand: npm start
     envVars:
-      # Do NOT commit secrets into the repository. You can leave values blank here and set them in the
-      # Render dashboard, or replace the values with secure parameters.
+      # Do NOT commit secrets into the repository. Set these in the Render dashboard instead.
       - key: MONGO_URI
         value: ""
       - key: ADMIN_PASSWORD
@@ -23,13 +22,18 @@ services:
       - key: JWT_SECRET
         value: ""
 
-  - type: static_site
+  - type: web
     name: virtual-queue-frontend
+    env: static
     plan: free
     branch: main
     root: frontend
     buildCommand: npm install && npm run build
-    publishPath: dist
+    # Use a lightweight static server for Render to serve the built files
+    startCommand: npx serve -s dist -l $PORT
+    envVars:
+      - key: VITE_API_URL
+        value: ""
 
 # Notes:
 # - The `root` fields point Render at the subfolders containing each service's package.json.
