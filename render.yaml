@@ -23,9 +23,8 @@ services:
       - key: JWT_SECRET
         value: ""
 
-  - type: static
+  - type: static_site
     name: virtual-queue-frontend
-    env: static
     plan: free
     branch: main
     root: frontend
