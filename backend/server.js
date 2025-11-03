@@ -42,6 +42,28 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' })
 })
 
+// Root: redirect to frontend if FRONTEND_URL is set, otherwise show API info
+app.get('/', (req, res) => {
+  const frontend = process.env.FRONTEND_URL || process.env.VITE_FRONTEND_URL || process.env.VITE_API_URL
+  if (frontend && frontend.startsWith('http')) {
+    // If FRONTEND_URL matches a backend API by mistake, avoid redirect loops
+    if (!frontend.includes(req.hostname)) {
+      return res.redirect(frontend)
+    }
+  }
+
+  res.json({
+    app: 'Virtual Queue backend',
+    api: {
+      queue: '/api/queue',
+      join: '/api/join (POST { name, studentId? })',
+      complete: '/api/complete/:id (POST) - admin only',
+      health: '/health'
+    },
+    note: 'If you host the frontend separately, visit that URL instead. Set FRONTEND_URL env to redirect.'
+  })
+})
+
 // Admin login - returns JWT if password matches
 app.post('/api/admin/login', async (req, res) => {
   const { password } = req.body || {}
