@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-  "dev": "npm exec vite",
-  "build": "npm exec vite -- build",
-  "preview": "npm exec vite -- preview"
+    "dev": "node ./node_modules/vite/bin/vite.js",
+    "build": "node ./node_modules/vite/bin/vite.js build",
+    "preview": "node ./node_modules/vite/bin/vite.js preview"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "dependencies": {
     "react": "^18.2.0",
