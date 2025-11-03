@@ -1,0 +1,39 @@
+# Render.com deployment manifest for the Virtual Queue project
+# This file defines two services: a Node web service for the backend and a static site for the frontend.
+# Replace placeholder values or set environment variables in the Render dashboard as appropriate.
+
+services:
+  - type: web
+    name: virtual-queue-backend
+    env: node
+    plan: free
+    region: oregon
+    branch: main
+    # root directory containing package.json for the backend
+    root: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      # Do NOT commit secrets into the repository. You can leave values blank here and set them in the
+      # Render dashboard, or replace the values with secure parameters.
+      - key: MONGO_URI
+        value: ""
+      - key: ADMIN_PASSWORD
+        value: ""
+      - key: JWT_SECRET
+        value: ""
+
+  - type: static
+    name: virtual-queue-frontend
+    env: static
+    plan: free
+    branch: main
+    root: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+
+# Notes:
+# - The `root` fields point Render at the subfolders containing each service's package.json.
+# - For security, set the environment variable values in the Render dashboard (Service -> Environment).
+# - If you prefer the frontend served by a CDN-enabled static site, use this static service. If you
+#   want the frontend as a Node server, change the type to `web` and adjust startCommand accordingly.
