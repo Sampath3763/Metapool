@@ -45,3 +45,40 @@ body {
 /* Responsive tweaks */
 @media (max-width:600px){ .container{ padding:18px } .num{ width:48px; height:48px } }
 
+/* Mobile-friendly adjustments */
+@media (max-width:900px) {
+	body { padding: env(safe-area-inset-top, 20px) 12px env(safe-area-inset-bottom, 20px); }
+	.container { padding: 16px; border-radius: 12px }
+	.header { flex-direction: row; gap:12px }
+	.logo { width:48px; height:48px; font-size:16px }
+	.title { font-size:18px }
+	.subtitle { display:none }
+
+	/* Stack join controls for small screens */
+	.join { flex-direction: column; gap:10px }
+	.join input { width:100% }
+	.join input[placeholder] { font-size:15px }
+	.btn { width:100%; padding:12px; font-size:15px }
+
+	/* Make admin controls compact and friendly */
+	.meta { font-size:12px }
+
+	.queue { gap:10px }
+	.queue li { padding:12px; gap:12px }
+	.num { width:52px; height:52px; font-size:17px }
+
+	/* Make the queue area scrollable and usable on small screens */
+	.queue-wrap { max-height: calc(60vh); overflow:auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* Larger touch targets for very small phones */
+@media (max-width:380px) {
+	.logo{ width:44px; height:44px }
+	.num { width:48px; height:48px }
+	.btn { padding:12px; font-size:15px }
+}
+
+/* Accessibility focus styles */
+.btn:focus, input:focus { outline: 3px solid rgba(124,58,237,0.18); outline-offset: 2px }
+
+
