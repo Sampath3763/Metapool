@@ -112,12 +112,21 @@ const fs = require('fs');
 const distPath = path.join(__dirname, '..', 'frontend', 'dist');
 if (fs.existsSync(distPath)) {
   console.log('Serving frontend from', distPath)
+  try {
+    const list = fs.readdirSync(distPath).slice(0, 20)
+    console.log('frontend/dist contents (top 20):', list)
+  } catch (e) {
+    console.error('Error reading dist directory:', e && e.message)
+  }
   app.use(express.static(distPath));
   // SPA fallback - send index.html for any non-API route
   app.get('*', (req, res) => {
     if (req.path.startsWith('/api') || req.path === '/health') return res.status(404).json({ error: 'Not found' });
     res.sendFile(path.join(distPath, 'index.html'))
   })
+}
+else {
+  console.log('frontend/dist not found at', distPath)
 }
 
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
